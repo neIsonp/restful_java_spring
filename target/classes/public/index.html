@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+    <style>
+        table {
+            width: 50%;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+            padding: 6px;
+        }
+
+        td {
+            background: #f9f9f9;
+            padding: 6px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <table id="list_table_json">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Nacionalidade</th>
+        </tr>
+    </table>
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:9090/api/alunos",
+            dataType: 'json',
+            type: 'get',
+            cache: false,
+            success: function (data) {
+                var event_data = '';
+
+                $.each(data, function (index, value) {
+
+                    event_data += '<tr>';
+                    event_data += '<td>' + value.id + '</td>';
+                    event_data += '<td>' + value.nome + '</td>';
+                    event_data += '<td>' + value.email + '</td>';
+                    event_data += '<td>' + value.nacionalidade + '</td>';
+                    event_data += '<tr>';
+                });
+
+                $("#list_table_json").append(event_data);
+            },
+
+            error: function (d) {
+                alert("404");
+            }
+        });
+    });
+</script>
